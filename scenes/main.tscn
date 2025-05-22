@@ -1,0 +1,235 @@
+[gd_scene load_steps=13 format=3 uid="uid://pp6yqmyugy0"]
+
+[ext_resource type="Script" path="res://scripts/Board.gd" id="1_rj56w"]
+[ext_resource type="Theme" uid="uid://bxr12gbvj11u2" path="res://Themes/GameButtonTheme.tres" id="2_kt6xb"]
+[ext_resource type="Script" path="res://scripts/gameButton.gd" id="3_6akel"]
+[ext_resource type="Script" path="res://scripts/numsList.gd" id="4_rj2wb"]
+[ext_resource type="Script" path="res://scripts/eraseNum.gd" id="5_ms2ap"]
+[ext_resource type="Script" path="res://scripts/chooseNum.gd" id="5_y0ksx"]
+[ext_resource type="Script" path="res://scripts/playLevel.gd" id="6_nqv0q"]
+[ext_resource type="Script" path="res://scripts/resetGame.gd" id="7_71sng"]
+
+[sub_resource type="Gradient" id="Gradient_r5ewe"]
+colors = PackedColorArray(0.831373, 0.831373, 0.831373, 1, 0.830335, 0.830335, 0.830335, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_dj4ry"]
+gradient = SubResource("Gradient_r5ewe")
+
+[sub_resource type="Gradient" id="Gradient_qifxo"]
+colors = PackedColorArray(0.0583909, 0.120277, 0.298622, 1, 0.0588235, 0.121569, 0.298039, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_u0ryh"]
+gradient = SubResource("Gradient_qifxo")
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BG" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_dj4ry")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(1089, 1089)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -600.0
+offset_top = -728.0
+offset_right = 600.0
+offset_bottom = 472.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_u0ryh")
+
+[node name="Board" type="VBoxContainer" parent="." node_paths=PackedStringArray("RowTemplate", "NumTemplate", "MainBoard", "SpacerTemplate")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -544.5
+offset_top = -672.5
+offset_right = 544.5
+offset_bottom = 416.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rj56w")
+RowTemplate = NodePath("../Templates/RowTempolate")
+NumTemplate = NodePath("../Templates/NumTemplate")
+MainBoard = NodePath(".")
+SpacerTemplate = NodePath("../Templates/SpacerTemplate")
+
+[node name="nums" type="VBoxContainer" parent="." node_paths=PackedStringArray("row1", "row2", "numTemplate")]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.963387
+anchor_right = 1.0
+anchor_bottom = 0.963387
+offset_top = -132.0
+offset_bottom = -128.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("4_rj2wb")
+row1 = NodePath("row1")
+row2 = NodePath("row2")
+numTemplate = NodePath("NumTemplate")
+
+[node name="row1" type="HBoxContainer" parent="nums"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+
+[node name="row2" type="HBoxContainer" parent="nums"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+
+[node name="NumTemplate" type="Button" parent="nums" node_paths=PackedStringArray("board")]
+visible = false
+custom_minimum_size = Vector2(240, 300)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 150
+text = "1"
+script = ExtResource("5_y0ksx")
+board = NodePath("../../Board")
+
+[node name="Levels" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.180015
+anchor_right = 0.5
+anchor_bottom = 0.199085
+offset_left = -594.0
+offset_top = -128.0
+offset_right = 594.0
+offset_bottom = 38.0
+grow_horizontal = 2
+
+[node name="SpacerTemplate2" type="TextureRect" parent="Levels"]
+custom_minimum_size = Vector2(5, 5)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="L1" type="Button" parent="Levels" node_paths=PackedStringArray("board")]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 90
+text = "  1  "
+script = ExtResource("6_nqv0q")
+board = NodePath("../../Board")
+level = 1
+
+[node name="L2" type="Button" parent="Levels" node_paths=PackedStringArray("board")]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 90
+text = "  2  "
+script = ExtResource("6_nqv0q")
+board = NodePath("../../Board")
+level = 2
+
+[node name="L3" type="Button" parent="Levels" node_paths=PackedStringArray("board")]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 90
+text = "  3  "
+script = ExtResource("6_nqv0q")
+board = NodePath("../../Board")
+level = 3
+
+[node name="FreePlay" type="Button" parent="Levels" node_paths=PackedStringArray("board")]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 60
+text = "Free
+Play"
+script = ExtResource("6_nqv0q")
+board = NodePath("../../Board")
+level = 4
+
+[node name="SpacerTemplate" type="TextureRect" parent="Levels"]
+custom_minimum_size = Vector2(120, 5)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="erase" type="Button" parent="Levels" node_paths=PackedStringArray("board")]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 60
+text = "Erase"
+script = ExtResource("5_ms2ap")
+board = NodePath("../../Board")
+
+[node name="reset" type="Button" parent="Levels" node_paths=PackedStringArray("board")]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 60
+text = "Reset"
+script = ExtResource("7_71sng")
+board = NodePath("../../Board")
+
+[node name="Templates" type="Node" parent="."]
+
+[node name="RowTempolate" type="HBoxContainer" parent="Templates"]
+visible = false
+offset_left = 58.5
+offset_top = 766.5
+offset_right = 58.5
+offset_bottom = 766.5
+
+[node name="NumTemplate" type="Button" parent="Templates" node_paths=PackedStringArray("Board")]
+visible = false
+custom_minimum_size = Vector2(121, 121)
+offset_left = 58.5
+offset_top = 766.5
+offset_right = 179.5
+offset_bottom = 887.5
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("2_kt6xb")
+theme_override_font_sizes/font_size = 80
+text = " "
+script = ExtResource("3_6akel")
+Board = NodePath("../../Board")
+override = "res://resources/ButtonFilled.tres"
+
+[node name="SpacerTemplate" type="TextureRect" parent="Templates"]
+visible = false
+custom_minimum_size = Vector2(5, 5)
+offset_left = 58.5
+offset_top = 766.5
+offset_right = 63.5
+offset_bottom = 771.5
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[connection signal="pressed" from="nums/NumTemplate" to="nums/NumTemplate" method="_on_pressed"]
+[connection signal="pressed" from="Levels/L1" to="Levels/L1" method="_on_pressed"]
+[connection signal="pressed" from="Levels/L2" to="Levels/L2" method="_on_pressed"]
+[connection signal="pressed" from="Levels/L3" to="Levels/L3" method="_on_pressed"]
+[connection signal="pressed" from="Levels/FreePlay" to="Levels/FreePlay" method="_on_pressed"]
+[connection signal="pressed" from="Levels/erase" to="Levels/erase" method="_on_pressed"]
+[connection signal="pressed" from="Levels/reset" to="Levels/reset" method="_on_pressed"]
+[connection signal="pressed" from="Templates/NumTemplate" to="Templates/NumTemplate" method="_on_pressed"]
